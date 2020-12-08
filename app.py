@@ -5,7 +5,7 @@ from flask_cors import CORS
 from views.grafana_api import grafana
 
 
-KEYSPACE = 'Test'
+KEYSPACE = 'test'
 
 
 def create_app():
