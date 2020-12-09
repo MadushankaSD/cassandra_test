@@ -13,7 +13,7 @@ def create_app():
     CORS(app)
     app.register_blueprint(api)
     app.register_blueprint(grafana)
-    app.debug = True
+    # app.debug = True
     cluster = Cluster()
     # cluster = Cluster(['',''])
     session = cluster.connect()

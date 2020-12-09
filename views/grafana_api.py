@@ -1,5 +1,8 @@
+import random
+
 from cassandra.cqlengine import connection
 from flask import Blueprint, jsonify
+
 
 grafana = Blueprint("/grafana/", __name__)
 connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
@@ -7,38 +10,35 @@ connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
 
 @grafana.route("/search", methods=['POST'])
 def search_grafana():
-    return jsonify(["upper_25", "upper_50", "upper_75", "upper_90", "upper_95"])
+    data = {"item": ["upper_25", "upper_50", "upper_75", "upper_90", "upper_95"]}
+    return jsonify(data)
 
 
 @grafana.route("/query", methods=['POST'])
 def query_grafana():
     return jsonify([
         {
-            "target": "pps in",
+            "target": "Gnip",
             "datapoints": [
-                [622, 1450754160000],
-                [365, 1450754220000]
+                [gen_rand_num()]
             ]
         },
         {
-            "target": "pps out",
+            "target": "Google sentiment",
             "datapoints": [
-                [861, 1450754160000],
-                [767, 1450754220000]
+                [gen_rand_num()]
             ]
         },
         {
-            "target": "errors out",
+            "target": "Google Translate",
             "datapoints": [
-                [861, 1450754160000],
-                [767, 1450754220000]
+                [gen_rand_num()]
             ]
         },
         {
-            "target": "errors in",
+            "target": "Twitter",
             "datapoints": [
-                [861, 1450754160000],
-                [767, 1450754220000]
+                [gen_rand_num()]
             ]
         }
     ])
@@ -56,3 +56,7 @@ def annotate_grafana():
             "tags": ["tag1"]
         }
     ])
+
+
+def gen_rand_num():
+   return random.randrange(30,1000)
