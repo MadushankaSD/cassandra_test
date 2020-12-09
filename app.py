@@ -3,7 +3,7 @@ from flask import Flask
 from views.api import api
 from flask_cors import CORS
 from views.grafana_api import grafana
-
+from script import sync_db
 
 KEYSPACE = 'test'
 
@@ -18,7 +18,7 @@ def create_app():
     # cluster = Cluster(['',''])
     session = cluster.connect()
     session.execute(
-        """CREATE  KEYSPACE IF NOT EXISTS %s WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1 };""" % KEYSPACE)
+        """CREATE KEYSPACE IF NOT EXISTS %s WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1 };""" % KEYSPACE)
     cluster.connect(keyspace=KEYSPACE)
     return app
 
